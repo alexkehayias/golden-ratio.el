@@ -162,6 +162,10 @@ will prevent the window to be resized to the golden ratio."
     (after golden-ratio-resize-window)
   (golden-ratio) nil)
 
+(defadvice previous-multiframe-window
+    (after golden-ratio-resize-window)
+  (golden-ratio) nil)
+
 ;; Should return the buffer
 (defadvice pop-to-buffer
     (around golden-ratio-resize-window)
@@ -193,11 +197,13 @@ will prevent the window to be resized to the golden ratio."
         (add-hook 'post-command-hook 'golden-ratio--post-command-hook)
         (add-hook 'mouse-leave-buffer-hook 'golden-ratio--mouse-leave-buffer-hook)
         (ad-activate 'other-window)
+        (ad-activate 'previous-multiframe-window)
         (ad-activate 'pop-to-buffer))
       (remove-hook 'window-configuration-change-hook 'golden-ratio)
       (remove-hook 'post-command-hook 'golden-ratio--post-command-hook)
       (remove-hook 'mouse-leave-buffer-hook 'golden-ratio--mouse-leave-buffer-hook)
       (ad-deactivate 'other-window)
+      (ad-deactivate 'previous-multiframe-window)
       (ad-deactivate 'pop-to-buffer)))
 
 
